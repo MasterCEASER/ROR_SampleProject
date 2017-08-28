@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @group_specification.Name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @group_specification.Description %>
+</p>
+
+<%= link_to 'Edit', edit_group_specification_path(@group_specification) %> |
+<%= link_to 'Back', group_specifications_path %>

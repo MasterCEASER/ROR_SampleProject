@@ -1,0 +1,2 @@
+class Imageable < ApplicationRecord
+end

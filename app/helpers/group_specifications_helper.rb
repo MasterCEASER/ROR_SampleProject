@@ -1,0 +1,2 @@
+module GroupSpecificationsHelper
+end

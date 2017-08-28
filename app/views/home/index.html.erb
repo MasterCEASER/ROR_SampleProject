@@ -1,0 +1,32 @@
+<div class="todo-container">
+  <div class="row">
+    <% @group_categories.each do |g| %>
+
+      <div class="col-md-3">
+        <ul class="todo-projects-container">
+          <li class="todo-padding-b-0">
+            <div class="todo-head">
+              <h3><%= g[:name] %></h3>
+            </div>
+          </li>
+          <li class="todo-projects-item">
+            <% g.categories.first(2).each do |c| %>
+              <div class="">
+                <h4><%= c[:name] %></h4>
+                <ul class="">                  
+                  <% c.sub_categories.first(2).each do |s| %>
+                    <li>
+                      <a><%= s[:name] %></a>
+                    </li>
+                  <% end %>            
+                </ul>
+              </div>
+            <% end %>            
+          </li>   
+          <div class="todo-projects-divider"></div>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>

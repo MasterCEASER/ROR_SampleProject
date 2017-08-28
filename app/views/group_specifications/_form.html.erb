@@ -1,0 +1,27 @@
+<%= form_with(model: group_specification, local: true) do |form| %>
+  <% if group_specification.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(group_specification.errors.count, "error") %> prohibited this group_specification from being saved:</h2>
+
+      <ul>
+      <% group_specification.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Name %>
+    <%= form.text_field :Name, id: :group_specification_Name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Description %>
+    <%= form.text_field :Description, id: :group_specification_Description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+class GroupSpecification < ApplicationRecord
+end

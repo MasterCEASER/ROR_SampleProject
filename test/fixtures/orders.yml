@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Amount: 1
+  Paid: 1
+  recieved: false
+  sent: false
+  delivered: false
+  user: one
+  order_product: one
+
+two:
+  Amount: 1
+  Paid: 1
+  recieved: false
+  sent: false
+  delivered: false
+  user: two
+  order_product: two
