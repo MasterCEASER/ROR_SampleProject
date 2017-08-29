@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   validates_attachment_presence :image
 
-  
+  has_many :carts
 
  	ROLES = %i[admin moderator user]
 

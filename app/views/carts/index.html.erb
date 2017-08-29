@@ -2,28 +2,58 @@
 
 <h1>Carts</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Product</th>
-      <th>User</th>
+      <th>Detail</th>
+      <th>Count</th>
+      <th>Price</th>
       <th colspan="3"></th>
     </tr>
   </thead>
-
+  <%
+   @count = 0
+   @price = 0
+  %>
   <tbody>
     <% @carts.each do |cart| %>
-      <tr>
-        <td><%= cart.product %></td>
-        <td><%= cart.user %></td>
-        <td><%= link_to 'Show', cart %></td>
-        <td><%= link_to 'Edit', edit_cart_path(cart) %></td>
-        <td><%= link_to 'Destroy', cart, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <% if cart.count.nil? == false %>
+        <tr>
+          <td> <%= cart.product.name %> </td>
+          <td> 
+            <%= cart.product.sub_category.category.group_category.name + ", " + cart.product.sub_category.category.name + ", " +  cart.product.sub_category.name %>
+          </td>
+          <% if cart.count.nil? 
+                cart.count = 0
+              end
+              @count += cart.count
+              @price += (cart.count * cart.product.price)
+            %>
+          <td> <%= cart.count %> </td>
+          <td> <%= (cart.count * cart.product.price) %> </td>
+          <td><%= link_to 'Show', [cart.product] %></td>
+          <td><%= link_to 'Edit', edit_cart_path(cart) %></td>
+          <td><%= link_to 'Remove', "/carts/deleted/"+cart.id.to_s  %></td>
+        </tr>
+      <% end %>
     <% end %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+        <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Total</td>
+        <td> <%= @count %> </td>
+        <td> <%= @price %> </td>
+        <td></td>
+    </tr>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Cart', new_cart_path %>

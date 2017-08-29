@@ -1,34 +1,37 @@
+<link href="/assets/pages/css/blog.min.css" rel="stylesheet" type="text/css" />
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @product.description %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= @product.price %>
-</p>
-
-<p>
-  <strong>Tags:</strong>
-  <%= @product.Tags %>
-</p>
-
-<p>
-  <strong>Sub categories:</strong>
-  <%= @product.sub_categories %>
-</p>
-
-<p>
-  <strong>Specifications:</strong>
-  <%= @product.specifications %>
-</p>
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<h2>
+    <%= link_to @product.sub_category.category.group_category[:name], [@product.sub_category.category.group_category]  %>
+  </h2>
+  <h3>
+    <%= link_to @product.sub_category.category[:name], [@product.sub_category.category.group_category, @product.sub_category.category]  %>
+  </h3>
+  <h4>
+    <%= link_to @product.sub_category[:name], [@product.sub_category.category.group_category, @product.sub_category.category, @product.sub_category]  %>
+  </h4>
+    <div class="blog-page blog-content-1">
+        <div class="row">          
+            <div class="col-sm-3">
+                <div class="blog-post-sm bordered blog-container">
+                    <div class="blog-img-thumb">
+                        <%= image_tag @product.image_file_name %> </div>
+                    <div class="blog-post-content">
+                        <h4 class="blog-title blog-post-title" style="height: 5ch;">
+                            <a href="<%= @product.description %>" target="_blank" style="font-size:15px;"><%= @product.name %> </a>
+                        </h2>
+                        <p class="blog-post-desc"> 
+                          <%=
+                          @product.sub_category.category.group_category.name + ", " + @product.sub_category.category.name + ", " +  @product.sub_category.name
+                          %>
+                        </p>
+                        <div class="blog-post-foot">
+                            <div class="blog-post-meta">
+                                <b>PKR. <%= @product.price %></b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<br>

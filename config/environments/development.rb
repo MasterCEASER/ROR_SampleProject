@@ -10,7 +10,11 @@ Rails.application.configure do
   config.cache_classes = false
 
   
-  Paperclip.options[:command_path] = "/usr/ bin/"
+  Paperclip.options[:command_path] = "/usr/bin/"
+
+Paperclip.options[:whiny_thumbnails] = true
+  Paperclip.options[:log_command] = true
+
   # Do not eager load code on boot.
   config.eager_load = false
 

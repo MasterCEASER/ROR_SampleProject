@@ -1,10 +1,11 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
+   before_action :authenticate_user!
 
   # GET /carts
   # GET /carts.json
   def index
-    @carts = Cart.all
+      @carts = Cart.where(:user_id=>current_user.id)
   end
 
   # GET /carts/1
@@ -17,6 +18,45 @@ class CartsController < ApplicationController
     @cart = Cart.new
   end
 
+  def add
+    if(params["doaction"].nil? == false && params["id"].nil? == false)
+      cart_data = Cart.where(:product_id=>params[:id],:user_id=>current_user.id)
+      if(current_user.nil? == true)
+        respond_to do |format|
+            format.html { render :new }
+            format.json { render json: "User", status: :unprocessable_entity }
+        end
+
+      elsif cart_data.count > 0
+        cart_item = cart_data.first
+        if(cart_item.count.nil?)
+          cart_item.count = 0
+        end
+        cart_item.count = cart_item.count + 1
+        respond_to do |format|
+          if cart_item.save
+            format.html { redirect_to @cart, notice: 'Cart was successfully updated.' }
+            format.json { render :show, status: :ok, location: @cart }
+          else
+            format.html { render :edit }
+            format.json { render json: @cart.errors, status: :unprocessable_entity }
+          end
+        end
+      else
+        @cart = Cart.new(:product_id=>params[:id],:user_id=>current_user.id,:count=>1)
+        respond_to do |format|
+          if @cart.save
+            format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
+            format.json { render :show, status: :created, location: @cart }
+          else
+            format.html { render :new }
+            format.json { render json: @cart.errors, status: :unprocessable_entity }
+          end
+        end
+      end
+    end   
+  end
+
   # GET /carts/1/edit
   def edit
   end
@@ -24,7 +64,9 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
-    @cart = Cart.new(cart_params)
+
+
+    @cart = Cart.new(cart_params[:product_id])
 
     respond_to do |format|
       if @cart.save
@@ -61,6 +103,14 @@ class CartsController < ApplicationController
     end
   end
 
+  def deleted
+    @crt = Cart.find(params[:id])
+    if(@crt.nil? ==false)
+      @crt.delete
+    end
+    redirect_to carts_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
@@ -69,6 +119,6 @@ class CartsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cart_params
-      params.require(:cart).permit(:product_id, :user_id)
+      params.require(:cart).permit(:product_id)
     end
 end

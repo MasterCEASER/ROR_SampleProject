@@ -1,9 +1,67 @@
+<link href="/assets/pages/css/blog.min.css" rel="stylesheet" type="text/css" />
 <p id="notice"><%= notice %></p>
+<style type="text/css">
+	.cart-icon-btn{
+		position: absolute;
+    left: 85%;
+    padding-top: 5%;
+	}
+	.cart-icon-btn > i{
+		font-size: 1.3em; 
+		cursor: pointer;
+	}
+</style>
+    <center><%= will_paginate @products %></center>
+    <div class="blog-page blog-content-1">
+        <div class="row">            
+        <% @products.each do |p| %>
+            <div class="col-sm-3">
+                <div class="blog-post-sm bordered blog-container">
+                    <div class="blog-img-thumb">
+                        <%= image_tag p.image_file_name %>                            
+                    </div>
+                    <span class="cart-icon-btn">
+                        <i class="fa fa-cart-arrow-down" pid="<%= p.id %>"></i>
+                    </span>
+                    <div class="blog-post-content">
+                        <h4 class="blog-title blog-post-title" style="height: 5ch;">
+                            <a href="<%= p.description %>" target="_blank" style="font-size:15px;"><%= p.name %> </a>
+                        </h2>
+                        <p class="blog-post-desc"> 
+                          <%=
+                          p.sub_category.category.group_category.name + ", " + p.sub_category.category.name + ", " +  p.sub_category.name
+                          %>
+                        </p>
+                        <div class="blog-post-foot">
+                            <div class="blog-post-meta">
+                                <b>PKR. <%= p.price %></b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <% end %> 
+        </div>
+    </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @sub_category.name %>
-</p>
-
-<%= link_to 'Edit', edit_sub_category_path(@sub_category) %> |
-<%= link_to 'Back', sub_categories_path %>
+    <center><%= will_paginate @products %></center>    
+<br>
+<script>
+	$(document).ready(function(){
+		$(".cart-icon-btn > i").each(function(){
+    		$(this).click(function(){
+    			var pid = parseInt($(this).attr("pid"));
+    			$.ajax({
+					url: '/carts/add',
+					dataType: "json",
+					method: 'get',
+					data: { id : pid,doaction: "add"},
+					success: function(response){
+					debugger;
+					      console.log(response);
+					}
+    			});
+    		});
+		});
+	});
+</script>

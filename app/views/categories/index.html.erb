@@ -1,27 +1,31 @@
+
 <p id="notice"><%= notice %></p>
 
-<h1>Categories</h1>
+<div class="todo-container">
+  <h1>
+    <%= link_to @categories.first.group_category[:name], [@categories.first.group_category]  %>
+  </h1>
+  <div class="row">
+    <% @categories.each do |c| %>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td><%= link_to 'Show', [category.group_category,  category] %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <div class="col-md-3">
+        <ul class="todo-projects-container">
+          <li class="todo-padding-b-0">
+            <div class="todo-head">
+              <h3>
+                <%= link_to c[:name], [c.group_category,  c]  %>
+              </h3>
+            </div>
+          </li>
+         <% c.sub_categories.each do |s| %>
+            <li style="padding: 5px 7%;">
+              <%= link_to s[:name], [s.category.group_category,  s.category,  s]  %>
+            </li>
+          <% end %> 
+          <div class="todo-projects-divider"></div>
+          </li>
+        </ul>
+      </div>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Category', new_category_path %>
+  </div>
+</div>

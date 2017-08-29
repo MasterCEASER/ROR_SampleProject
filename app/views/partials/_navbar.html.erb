@@ -199,7 +199,7 @@
         <!-- END INBOX DROPDOWN -->
         <!-- BEGIN TODO DROPDOWN -->
         <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-        <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
+        <li class="dropdown dropdown-extended dropdown-tasks hide" id="header_task_bar">
           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
             <i class="fa fa-shopping-cart"></i>
             <span class="badge badge-default"> 3 </span>
@@ -307,10 +307,16 @@
             </li>
           </ul>
         </li>
+        <li >
+          <a href="/carts">
+            <i class="fa fa-shopping-cart"></i>
+            <span class="badge badge-default"> <%= Cart.where(user_id: current_user.id).count %> </span>
+          </a>
+        </li>
         <!-- END TODO DROPDOWN -->
         <!-- BEGIN USER LOGIN DROPDOWN -->
         <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-        <% if user_signed_in? == false %>
+        <% if user_signed_in? == true %>
             <li class="dropdown dropdown-user">
           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
             <%= image_tag current_user.image.url, :class=>"img-circle", :style=>"width:29px;height:29px;" %>
@@ -318,7 +324,7 @@
             <i class="fa fa-angle-down"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-default">
-            <li>
+            <!--<li>
               <a href="page_user_profile_1.html">
                 <i class="icon-user"></i> My Profile </a>
             </li>
@@ -342,7 +348,7 @@
             <li>
               <a href="page_user_lock_1.html">
                 <i class="icon-lock"></i> Lock Screen </a>
-            </li>
+            </li> -->
             <% if user_signed_in? %>
               <li>
                 <%= link_to "<i class='icon-key'></i> Log Out".html_safe  ,destroy_user_session_path, method: :delete %>

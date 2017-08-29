@@ -1,10 +1,10 @@
 class GroupCategoriesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_group_category, only: [:show, :edit, :update, :destroy]
 
   # GET /group_categories
   # GET /group_categories.json
-  def index
-    @group_categories = GroupCategory.all
+  def index    
     render "home/index"
   end
 
@@ -74,4 +74,6 @@ class GroupCategoriesController < ApplicationController
     def group_category_params
       params.require(:group_category).permit(:name, :category_id)
     end
+    # --------------------------
+    
 end
